@@ -458,7 +458,6 @@ Real LinMoreAlgorithm<Real>::dgpstep(Vector<Real> &s, const Vector<Real> &w,
   int proj_iter = 0;
   proj_->project(s, outStream, &proj_iter);
   state_->nproj++;
-  std::cout << "num_proj_iter: " << proj_iter << "\n";
   state_->nprojIter += proj_iter;
 
   s.axpy(static_cast<Real>(-1),x);
