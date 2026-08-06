@@ -73,7 +73,6 @@ void LSecantBAlgorithm<Real>::initialize(Vector<Real>          &x,
   int proj_iter = 0;
   proj_->project(x, outStream, &proj_iter);
   state_->nproj++;
-  std::cout << "num_proj_iter: " << proj_iter << "\n";
   state_->nprojIter += proj_iter;
 
   state_->iterateVec->set(x);
