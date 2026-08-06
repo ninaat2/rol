@@ -94,9 +94,6 @@ void RowWiseDaiFletcherProjection<Real>::initialize( const Vector<Real>         
                                                             const Vector<Real>               &res) {
 }
 
-
-
-
 template<typename Real>
 Real RowWiseDaiFletcherProjection<Real>::residual(const std::vector<Real> &x) const {
   Real sum = static_cast<Real>(0);
@@ -136,21 +133,6 @@ void RowWiseDaiFletcherProjection<Real>::project_df(
   const Real xmin = *minmax.first;
   const Real xmax = *minmax.second;
 
-  /*
-    We solve for lam:
-
-        sum_k clip(x_k + lam, lower, upper) = target_sum.
-
-    This residual is monotone increasing in lam.
-
-    A safe bracket is:
-
-        lamLower = lower - xmax
-        lamUpper = upper - xmin
-
-    At lamLower, all entries are at or below lower after shifting.
-    At lamUpper, all entries are at or above upper after shifting.
-  */
   Real lamLower = lower_ - xmax;
   Real lamUpper = upper_ - xmin;
 
@@ -177,9 +159,6 @@ void RowWiseDaiFletcherProjection<Real>::project_df(
     return;
   }
 
-  /*
-    Initial secant estimate.
-  */
   lam = (lamLower * resUpper - lamUpper * resLower)
         / (resUpper - resLower);
 
@@ -197,13 +176,7 @@ void RowWiseDaiFletcherProjection<Real>::project_df(
     if (std::abs(res) <= ctol || bracket_width <= ltol_ * scale) {
       break;
     }
-
-    /*
-      Maintain bracket. Since residual is increasing in lam:
-
-        res > 0 means lam is too large,
-        res < 0 means lam is too small.
-    */
+  
     if (res > zero) {
       lamUpper = lam;
       resUpper = res;
@@ -220,9 +193,7 @@ void RowWiseDaiFletcherProjection<Real>::project_df(
     *proj_iter = cnt;
   }
 
-  /*
-    Return projected detection row.
-  */
+  
   x = xnew;
 
   if (std::abs(res) > ctol && verbosity_ > 0) {
@@ -274,6 +245,6 @@ void RowWiseDaiFletcherProjection<Real>::project(Vector<Real> &x,
   }
 }
 
-} // namespace ROL
+} 
 
 #endif

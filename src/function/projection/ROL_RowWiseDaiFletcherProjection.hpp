@@ -44,14 +44,12 @@ private:
   using PolyhedralProjection<Real>::mul_;
   using PolyhedralProjection<Real>::res_;
 
-
   void initialize(const Vector<Real>               &xprim,
                   const Vector<Real>               &xdual,
                   const Ptr<BoundConstraint<Real>> &bnd,
                   const Ptr<Constraint<Real>>      &con,
                   const Vector<Real>               &mul,
                   const Vector<Real>               &res);
-
 
   Real residual(const std::vector<Real> &x) const;
 
@@ -61,7 +59,8 @@ private:
 
   void project_df(std::vector<Real> &x,
                   Real              &lam,
-                  std::ostream      &stream = std::cout, int *proj_iter = nullptr) const;
+                  std::ostream      &stream = std::cout, 
+                  int *proj_iter = nullptr) const;
 
 public:
   RowWiseDaiFletcherProjection(
@@ -82,10 +81,11 @@ public:
       ParameterList                    &list);
 
   void project(Vector<Real> &x, std::ostream &stream = std::cout) override;
+
   void project(Vector<Real> &x, std::ostream &stream, int *proj_iter) override;
 };
 
-} // namespace ROL
+}
 
 #include "ROL_RowWiseDaiFletcherProjection_Def.hpp"
 
